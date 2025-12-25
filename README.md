@@ -1,167 +1,193 @@
----
-# MNIST Classification using Neural Network from Scratch (NumPy)
+MNIST Handwritten Digit Classification
 
-## 📌 Overview
+Neural Network from Scratch using NumPy
 
-This project implements a **fully connected neural network from scratch using NumPy** to classify handwritten digits from the **MNIST dataset**.
-No deep learning frameworks (TensorFlow / PyTorch) are used — all computations including **forward propagation, backpropagation, and gradient descent** are implemented manually.
+Overview
 
-The model achieves **~90%+ test accuracy** on MNIST using a CPU-only environment.
----
+This project implements a fully connected neural network from scratch using NumPy to classify handwritten digits from the MNIST dataset.
+All core components—forward propagation, backpropagation, and gradient descent—are implemented manually without using deep learning frameworks such as TensorFlow or PyTorch.
 
-## Model Architecture
+A key part of this work is the training convergence analysis, comparing batch gradient descent with mini-batch gradient descent, demonstrating how optimization strategy impacts learning efficiency.
 
-- **Input Layer**: 784 neurons (28×28 flattened image)
-- **Hidden Layer 1**: 128 neurons (ReLU)
-- **Hidden Layer 2**: 64 neurons (ReLU)
-- **Output Layer**: 10 neurons (Softmax)
+Model Architecture
 
-```
+Input Layer: 784 neurons (28×28 flattened image)
+
+Hidden Layer 1: 128 neurons, ReLU activation
+
+Hidden Layer 2: 64 neurons, ReLU activation
+
+Output Layer: 10 neurons, Softmax activation
+
 784 → 128 → 64 → 10
-```
 
----
+Features
 
-## Features Implemented
+Fully connected dense neural network
 
-- Fully connected (dense) neural network
-- He weight initialization
-- ReLU and Softmax activations
-- Forward propagation
-- Backpropagation using chain rule
-- **Vanilla Batch Gradient Descent**
-- Categorical Cross-Entropy loss
-- Unit tests for forward and backward passes
-- Training and evaluation on MNIST
-- Loss and accuracy visualization
+He weight initialization
 
----
+ReLU and Softmax activations
 
-## Project Structure
+Forward propagation
 
-```
+Backpropagation using the chain rule
+
+Categorical Cross-Entropy loss
+
+Vanilla batch gradient descent
+
+Mini-batch gradient descent
+
+Unit tests for forward and backward passes
+
+Training and evaluation on MNIST
+
+Loss and accuracy visualization
+
+Project Structure
 MNIST_NN_FROM_SCRATCH/
 │
-├── model.py        # Neural network implementation
-├── train.py        # Training & evaluation script
-├── tests.py        # Unit tests
-├── README.md       # Project documentation
+├── model.py # Neural network implementation
+├── train.py # Training and evaluation
+├── tests.py # Unit tests
+├── README.md # Documentation
 ├── requirements.txt
 └── .gitignore
-```
 
----
-
-## Requirements
+Requirements
 
 Install dependencies using:
 
-```bash
 pip install -r requirements.txt
-```
 
-**Required libraries:**
+Libraries
 
-- Python 3.x
-- NumPy
-- scikit-learn
-- pandas
-- matplotlib
+Python 3.x
 
----
+NumPy
 
-## How to Run
+scikit-learn
 
-### Run Unit Tests (Sanity Check)
+pandas
 
-```bash
-python tests.py
-```
+matplotlib
+
+How to Run
+
+1. Run Unit Tests
+   python tests.py
+
+Verifies correctness of:
+
+Forward pass output dimensions
+
+Backpropagation gradient dimensions
 
 Expected output:
 
-```
 All tests passed!
-```
 
----
+2. Train the Model
+   python train.py
 
-### Train the Model
+This trains the model, prints epoch-wise loss and accuracy, evaluates test performance, and displays training plots.
 
-```bash
-python train.py
-```
+Training Convergence Report
+Before: Batch Gradient Descent
 
-During training, you will see:
+The initial training used vanilla batch gradient descent, where model parameters were updated once per epoch using the entire training dataset.
 
-- Epoch-wise loss and accuracy
-- Final test accuracy
-- Loss and accuracy plots
+Observations
 
----
+Very slow convergence
 
-## Results
+Model failed to converge effectively even after 100 epochs
 
-- **Training Accuracy**: ~90–92%
-- **Test Accuracy**: ~90–93%
-- **Epochs**: 100-120
-- **Optimizer**: Vanilla Batch Gradient Descent
+Accuracy plateaued early
 
----
+High computational cost on CPU
 
-## Optimization Details
+Plots
 
-The network uses **vanilla gradient descent**, updating parameters as:
+Training loss and accuracy (Batch Gradient Descent)
+![Before Training - Batch Gradient Descent](images/acuracy_losses.png)
+Conclusion
+Batch gradient descent, while mathematically correct, was inefficient for this task and hardware setup.
 
-[
-W = W - \alpha \frac{\partial L}{\partial W}
-]
+After: Mini-Batch Gradient Descent
 
-For the output layer:
+To improve training efficiency, mini-batch gradient descent was introduced.
 
-- **Softmax + Categorical Cross-Entropy**
-- Gradient simplifies to:
-  [
-  \frac{\partial L}{\partial Z} = \hat{y} - y
-  ]
+Key Changes
 
-Hidden layers use ReLU activation with standard backpropagation.
+Mini-batch size: 128
 
----
+Multiple updates per epoch
 
-## Testing
+Same architecture and loss function
 
-Unit tests verify:
+Same CPU-only environment
 
-- Forward pass output shapes
-- Backpropagation gradient dimensions
-- Parameter-gradient consistency
+Observations
 
-This ensures mathematical correctness before training.
+Faster and more stable convergence
 
----
+Model achieved over 90% accuracy within 20–30 epochs
 
-## Key Learnings
+Smooth loss reduction
 
-- Understanding neural networks at a mathematical level
-- Importance of correct loss-activation pairing
-- Backpropagation mechanics
-- Gradient descent behavior on real data
-- Debugging training instability
+Significantly reduced training time
 
----
+Plots
 
-## Future Improvements
+Training loss and accuracy (Mini-Batch Gradient Descent)
+![After Training - Mini-Batch Gradient Descent](images/accuracy_loses_mini_batch.png)
 
-- Mini-batch gradient descent
-- Adam optimizer
-- Regularization (L2, Dropout)
-- CNN implementation for higher accuracy
+Conclusion
+Mini-batch gradient descent significantly improved convergence speed and training stability, enabling efficient learning with far fewer epochs.
 
----
+Comparison Summary
+Aspect Batch Gradient Descent Mini-Batch Gradient Descent
+Epochs required 100–250 20–30
+Updates per epoch 1 Multiple
+Convergence speed Slow Fast
+CPU efficiency Low High
+Practical usability Poor Good
+Final Results
 
-## Author
+Training Accuracy: ~90–92%
 
-**Mukhesh Kumar Reddy**
+Test Accuracy: ~90–93%
 
----
+Optimizer: Mini-Batch Gradient Descent
+
+Loss Function: Categorical Cross-Entropy
+
+Hardware: CPU only
+
+Key Learnings
+
+Correct activation–loss pairing is critical (Softmax + Cross-Entropy)
+
+Optimization strategy strongly affects convergence
+
+Batch gradient descent is inefficient for large datasets
+
+Mini-batch training provides faster and more stable learning
+
+End-to-end understanding of neural networks without frameworks
+
+Future Improvements
+
+Adam or Momentum-based optimizers
+
+Regularization (L2, Dropout)
+
+Convolutional Neural Networks
+
+Early stopping
+
+Author
+
+Mukhesh Kumar Reddy

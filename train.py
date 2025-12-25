@@ -21,23 +21,51 @@ nn = NeuralNetwork(
 )
 
 
-epochs = 250
+epochs = 30
+batch_size = 128
+n_samples = X_train.shape[0]
+
 losses = []
 accuracies = []
 for epoch in range(epochs):
-    y_hat,cache = nn.forward(X_train)
-    loss = -np.mean(np.sum(y_train * np.log(y_hat + 1e-8), axis=1))
-    grads = nn.backward(X_train, y_train, cache)
-    nn.update(grads)
+    # Shuffle data
+    indices = np.random.permutation(n_samples)
+    X_shuffled = X_train[indices]
+    y_shuffled = y_train[indices]
 
-    preds = np.argmax(y_hat,axis=1)
-    labels = np.argmax(y_train,axis=1)
-    acc = np.mean(preds == labels)
+    epoch_loss = 0
+    correct = 0
 
-    losses.append(loss)
-    accuracies.append(acc)
+    for start in range(0, n_samples, batch_size):
+        end = start + batch_size
+        X_batch = X_shuffled[start:end]
+        y_batch = y_shuffled[start:end]
 
-    print(f"Epoch {epoch+1}/{epochs} | Loss: {loss:.4f} | Acc: {acc:.4f}")
+        y_hat, cache = nn.forward(X_batch)
+
+        loss = -np.mean(
+            np.sum(y_batch * np.log(y_hat + 1e-8), axis=1)
+        )
+
+        grads = nn.backward(X_batch, y_batch, cache)
+        nn.update(grads)
+
+        epoch_loss += loss * len(X_batch)
+        preds = np.argmax(y_hat, axis=1)
+        labels = np.argmax(y_batch, axis=1)
+        correct += np.sum(preds == labels)
+
+    epoch_loss /= n_samples
+    epoch_acc = correct / n_samples
+
+    losses.append(epoch_loss)
+    accuracies.append(epoch_acc)
+
+    print(
+        f"Epoch {epoch+1}/{epochs} | "
+        f"Loss: {epoch_loss:.4f} | Acc: {epoch_acc:.4f}"
+    )
+
 
 
 
