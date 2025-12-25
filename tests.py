@@ -1,7 +1,6 @@
 import numpy as np
 from model import NeuralNetwork
 
-
 def test_forward_shape():
     nn = NeuralNetwork([4, 5, 3], ["relu", "sigmoid"])
     X = np.random.randn(10, 4)

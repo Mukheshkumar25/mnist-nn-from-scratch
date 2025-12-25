@@ -25,7 +25,6 @@ Output Layer: 10 neurons, Softmax activation
 
 784 → 128 → 64 → 10
 
-
 """
 
 FEATURES
@@ -61,12 +60,11 @@ MNIST_NN_FROM_SCRATCH/
 ├── train.py
 ├── tests.py
 ├── images/
-│   ├── before_training.png
-│   └── after_training.png
+│ ├── before_training.png
+│ └── after_training.png
 ├── README.md
 ├── requirements.txt
 └── .gitignore
-
 
 """
 
@@ -75,7 +73,6 @@ REQUIREMENTS
 Install dependencies using:
 
 pip install -r requirements.txt
-
 
 Libraries Used
 
@@ -92,17 +89,16 @@ matplotlib
 """
 
 HOW TO RUN
-1. Run Unit Tests
-python tests.py
 
+1. Run Unit Tests
+   python tests.py
 
 Expected output:
 
 All tests passed!
 
 2. Train the Model
-python train.py
-
+   python train.py
 
 This will:
 
@@ -136,9 +132,8 @@ High computational cost on CPU
 
 """
 
- INSERT BEFORE TRAINING PLOTS HERE
-![Before Training - Batch Gradient Descent](images/accuracy_loses_mini_batch.png)
-
+INSERT BEFORE TRAINING PLOTS HERE
+![Before Training - Batch Gradient Descent](images/acuracy_losses.png)
 
 """
 
@@ -173,9 +168,8 @@ Significantly reduced training time
 
 """
 
- INSERT AFTER TRAINING PLOTS HERE
+INSERT AFTER TRAINING PLOTS HERE
 ![After Training - Mini-Batch Gradient Descent](images/accuracy_loses_mini_batch.png)
-
 
 """
 
@@ -185,12 +179,12 @@ Mini-batch gradient descent significantly improved convergence speed and trainin
 """
 
 COMPARISON SUMMARY
-Aspect	Batch Gradient Descent	Mini-Batch Gradient Descent
-Epochs required	100–250	20–30
-Updates per epoch	1	Multiple
-Convergence speed	Slow	Fast
-CPU efficiency	Low	High
-Practical usability	Poor	Good
+Aspect Batch Gradient Descent Mini-Batch Gradient Descent
+Epochs required 100–250 20–30
+Updates per epoch 1 Multiple
+Convergence speed Slow Fast
+CPU efficiency Low High
+Practical usability Poor Good
 
 """
 
