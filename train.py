@@ -17,11 +17,11 @@ X_train,X_test,y_train,y_test = train_test_split(X,y_encoded,test_size=0.2,rando
 nn = NeuralNetwork(
     layer_sizes=[784, 128, 64, 10],
     activations=["relu", "relu", "softmax"],
-    learning_rate=0.05
+    learning_rate=0.1
 )
 
 
-epochs = 200
+epochs = 250
 losses = []
 accuracies = []
 for epoch in range(epochs):
@@ -48,8 +48,8 @@ test_acc = np.mean(test_preds == test_labels)
 
 print(f"\nTest Accuracy: {test_acc:.4f}")
 
-print("Losses:",losses)
-print("Accuracies:",accuracies)
+#print("Losses:",losses)
+#print("Accuracies:",accuracies)
 # Plots
 plt.figure(figsize=(12, 5))
 plt.subplot(1, 2, 1)
